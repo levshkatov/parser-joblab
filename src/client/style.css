@@ -1,0 +1,73 @@
+* {
+    font-family: Arial,Sans-Serif;
+    -webkit-text-size-adjust: none;
+    text-size-adjust: none;
+}
+
+body {
+    padding: 0 15px 0 15px;
+    margin: 0;
+    background: #CADCDE 0 0 repeat-x;
+    height: 100%;
+    font-family: Arial,Sans-Serif;
+    font-size: 17px;
+    letter-spacing: -0.01em;
+    color: #1A1A1A;
+    overflow-y: scroll;
+}
+
+input, select, textarea {
+    box-sizing: border-box;
+    -ms-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+}
+
+.contentmain p {
+    padding: 10px 0 10px 0;
+    margin: 0;
+    line-height: 1.4em;
+}
+
+.contentmain select, .contentmain textarea, .contentmain input {
+    font-family: Arial,Sans-Serif;
+    font-size: 17px;
+    padding: 10px;
+}
+
+.contentmain select, .contentmain textarea, .contentmain input[type="text"], .contentmain input[type="number"], .contentmain input[type="email"], .contentmain input[type="tel"], .contentmain input[type="password"] {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background-color: #FFF;
+    border: 1px solid #CCC;
+    border-radius: 5px;
+}
+
+.contentmain input[type="submit"], .contentmain input[type="button"] {
+    cursor: pointer;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background: #EEE;
+    border: 1px solid #AAA;
+    border-radius: 5px;
+}
+
+.main-box {
+    padding: 10px 20px 12px 20px;
+    /* min-height: 700px; */
+    border-radius: 8px;
+    background-color: #FFF;
+}
+
+#log {
+    height:400px; 
+    width:800px;
+    padding: 10px;
+    font-family: monospace; 
+    font-size: 11pt;
+    line-height: 135%;
+    border: 1px solid;
+    resize: none;
+}

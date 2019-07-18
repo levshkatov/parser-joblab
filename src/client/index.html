@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>joblab-parser</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <script type="text/javascript" src="index.js"></script>
+    <script type="text/javascript" src="cities.js"></script>
+</head>
+
+<body>
+    
+    <table class="main-box" width="100%" border="0" align="center" cellpadding="0" cellspacing="0" style="min-width:300px; max-width:1200px">
+        <tr>
+            <td class="contentmain" valign="top" style="min-height:200px;">
+
+                <div name="search_top" style="background:#F0F5F9; padding:10px 20px 10px 20px; margin:8px -20px 20px -20px;">
+                    
+                    <table width="100%" cellspacing="0" cellpadding="0" border="0">
+                        <tr>
+                            <td width="10%" class="td-to-div">
+                                <p><select id="selectTypeOfSearch" name="r"
+                                    style="width:100%; min-width:140px; height:42px; font-size:18px;">
+                                    <option value="vac">Вакансии</option>
+                                    <option value="res" selected>Резюме</option>
+                                </select></p>
+                            </td>
+                            <td width="1%" style="padding:3px" class="hhide">&nbsp;</td>
+                            <td class="td-to-div">
+                                <p style="position:relative;">
+                                    <input id="inputSearchString" type="text" name="srprofecy"
+                                    value="" style="width:100%; height:42px; font-size:18px;"
+                                    maxlength="150" placeholder="Ключевые слова"
+                                    id="srprofecy_auto" autocomplete="off">
+                                    <select id="selectSearchBy_res" name="kw_w2"
+                                    style="width:140px; height:36px; font-size:15px; border-top:none; border-right:none; border-bottom:none; border-radius:0; position:absolute; top:13px; right:5px; padding:6px 8px 6px 8px;"
+                                    class="hhide">
+                                    <option value="1" selected>по должности</option>
+                                    <option value="2">по всему резюме</option>
+                                    <option value="3">по опыту работы</option>
+                                    <option value="5">по образованию</option>
+                                    <option value="6">по навыкам</option>
+                                </select>
+                                <select id="selectSearchBy_vac" name="kw_w2"
+                                style="width:140px; height:36px; font-size:15px; border-top:none; border-right:none; border-bottom:none; border-radius:0; position:absolute; top:13px; right:5px; padding:6px 8px 6px 8px; display:none;"
+                                class="hhide">
+                                <option value="1" selected>по должности</option>
+                                <option value="2">по всей вакансии</option>
+                            </select>
+                        </p>
+                    </td>
+                    <td width="1%" style="padding:3px" class="hhide">&nbsp;</td>
+                    <td width="15%" class="td-to-div">
+                        <p><input id="inputSalary" type="text" name="srzpmin" value="" maxlength="6"
+                            style="width:100%; height:42px; font-size:18px;"
+                            placeholder="Зарплата от"></p>
+                        </td>
+                    </tr>
+                </table>
+                
+                <table width="100%" cellspacing="0" cellpadding="0" border="0">
+                    <tr>
+                        <td width="25%" class="td-to-div">
+                            <p><select id="selectRegion" name="srregion"
+                                style="width:100%; height:41px;">
+                                <option value="100" selected>Любой регион</option>
+                                <optgroup label="Город">
+                                    <option value="50">Москва и область</option>
+                                    <option value="47">Санкт-Петербург и область</option>
+                                </optgroup>
+                                <optgroup label="Область">
+                                    <option value="28">Амурская</option>
+                                    <option value="29">Архангельская</option>
+                                    <option value="30">Астраханская</option>
+                                    <option value="31">Белгородская</option>
+                                    <option value="32">Брянская</option>
+                                    <option value="33">Владимирская</option>
+                                    <option value="34">Волгоградская</option>
+                                    <option value="35">Вологодская</option>
+                                    <option value="36">Воронежская</option>
+                                    <option value="79">Еврейская</option>
+                                    <option value="37">Ивановская</option>
+                                    <option value="38">Иркутская</option>
+                                    <option value="39">Калининградская</option>
+                                    <option value="40">Калужская</option>
+                                    <option value="42">Кемеровская</option>
+                                    <option value="43">Кировская</option>
+                                    <option value="44">Костромская</option>
+                                    <option value="45">Курганская</option>
+                                    <option value="46">Курская</option>
+                                    <option value="48">Липецкая</option>
+                                    <option value="49">Магаданская</option>
+                                    <option value="51">Мурманская</option>
+                                    <option value="52">Нижегородская</option>
+                                    <option value="53">Новгородская</option>
+                                    <option value="54">Новосибирская</option>
+                                    <option value="55">Омская</option>
+                                    <option value="56">Оренбургская</option>
+                                    <option value="57">Орловская</option>
+                                    <option value="58">Пензенская</option>
+                                    <option value="60">Псковская</option>
+                                    <option value="61">Ростовская</option>
+                                    <option value="62">Рязанская</option>
+                                    <option value="63">Самарская</option>
+                                    <option value="64">Саратовская</option>
+                                    <option value="65">Сахалинская</option>
+                                    <option value="66">Свердловская</option>
+                                    <option value="67">Смоленская</option>
+                                    <option value="68">Тамбовская</option>
+                                    <option value="69">Тверская</option>
+                                    <option value="70">Томская</option>
+                                    <option value="71">Тульская</option>
+                                    <option value="72">Тюменская</option>
+                                    <option value="73">Ульяновская</option>
+                                    <option value="74">Челябинская</option>
+                                    <option value="76">Ярославская</option>
+                                </optgroup>
+                                <optgroup label="Край">
+                                    <option value="22">Алтайский</option>
+                                    <option value="75">Забайкальский</option>
+                                    <option value="41">Камчатский</option>
+                                    <option value="23">Краснодарский</option>
+                                    <option value="24">Красноярский</option>
+                                    <option value="59">Пермский</option>
+                                    <option value="25">Приморский</option>
+                                    <option value="26">Ставропольский</option>
+                                    <option value="27">Хабаровский</option>
+                                </optgroup>
+                                <optgroup label="Республика">
+                                    <option value="1">Адыгея</option>
+                                    <option value="4">Алтай</option>
+                                    <option value="2">Башкортостан</option>
+                                    <option value="3">Бурятия</option>
+                                    <option value="5">Дагестан</option>
+                                    <option value="6">Ингушетия</option>
+                                    <option value="7">Кабардино-Балкария</option>
+                                    <option value="8">Калмыкия</option>
+                                    <option value="9">Карачаево-Черкесия</option>
+                                    <option value="10">Карелия</option>
+                                    <option value="11">Коми</option>
+                                    <option value="82">Крым</option>
+                                    <option value="12">Марий Эл</option>
+                                    <option value="13">Мордовия</option>
+                                    <option value="14">Саха (Якутия)</option>
+                                    <option value="15">Северная Осетия</option>
+                                    <option value="16">Татарстан</option>
+                                    <option value="17">Тыва</option>
+                                    <option value="18">Удмуртия</option>
+                                    <option value="19">Хакасия</option>
+                                    <option value="20">Чечня</option>
+                                    <option value="21">Чувашия</option>
+                                </optgroup>
+                                <optgroup label="Автономный округ">
+                                    <option value="83">Ненецкий</option>
+                                    <option value="86">Ханты-Мансийский</option>
+                                    <option value="87">Чукотский</option>
+                                    <option value="89">Ямало-Ненецкий</option>
+                                </optgroup>
+                            </select></p>
+                        </td>
+                        <td width="1%" style="padding:3px" class="hhide">&nbsp;</td>
+                        <td width="22%" class="td-to-div">
+                            <p><select id="selectCity" name="srcity" style="width:100%; height:41px;">
+                                <option value="">Любой город</option>
+                            </select></p>
+                        </td>
+                        <td width="1%" style="padding:3px" class="hhide">&nbsp;</td>
+                        <td class="td-to-div">
+                            <p><select id="selectCategory" name="srcategory" style="width:100%; height:41px;">
+                                <option value="" style="color:#999">Рубрика</option>
+                                <option value="11">Административная работа / Секретариат
+                                </option>
+                                <option value="12">Закупки / Снабжение</option>
+                                <option value="15">Издательство / Дизайн / Полиграфия
+                                </option>
+                                <option value="16">Информационные технологии / IT</option>
+                                <option value="13">Искусство / Культура / Развлечения
+                                </option>
+                                <option value="17">Кадровая служба / Тренинги / HR</option>
+                                <option value="19">Маркетинг / Реклама / PR</option>
+                                <option value="20">Медицина / Фармацевтика</option>
+                                <option value="22">Недвижимость / ЖКХ</option>
+                                <option value="23">Образование / Воспитание / Наука</option>
+                                <option value="24">Охрана / Безопасность</option>
+                                <option value="25">Персонал для дома</option>
+                                <option value="26">Производство / Промышленность</option>
+                                <option value="27">Работа для молодежи</option>
+                                <option value="42">Рабочие специальности</option>
+                                <option value="30">Руководители</option>
+                                <option value="31">Складское хозяйство / Логистика / ВЭД
+                                </option>
+                                <option value="41">Спорт / Красота</option>
+                                <option value="33">Страхование</option>
+                                <option value="34">Строительство / Проектирование</option>
+                                <option value="36">Торговля / Продажи</option>
+                                <option value="37">Транспорт / Автобизнес</option>
+                                <option value="38">Туризм / Рестораны / Гостиницы</option>
+                                <option value="39">Финансы / Бухгалтерия / Банки</option>
+                                <option value="40">Юриспруденция</option>
+                            </select></p>
+                        </td>
+                        <td width="1%" style="padding:3px" class="hhide">&nbsp;</td>
+                        <td width="10%" align="right" class="td-to-div">
+                            <p><input id="inputSubmitForm" type="submit" value="Найти"
+                                style="width:100%; min-width:110px; height:41px;">
+                                </p>
+                            </td>
+                        </tr>
+                    </table>
+                    
+                </div>
+                
+            </td>
+        </tr>
+        <tr><td style="height:500px;">
+            <textarea id="log" readonly>Системные сообщения&#13;&#10;sadsad&#13;&#10;sadasd</textarea>
+        </td></tr>
+    </table>
+</body>
+
+</html>

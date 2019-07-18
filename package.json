@@ -4,16 +4,17 @@
   "description": "parsing script for joblab.ru",
   "main": "index.js",
   "engines": {
-    "node": "<12.4"
+    "node": ">10.0.0"
   },
   "scripts": {
-    "start": "TZ=Europe/Moscow node src/app.js"
+    "start": "TZ=Europe/Moscow node --experimental-modules src/app.mjs"
   },
   "author": "levshkatov",
   "license": "proprietary",
   "private": true,
   "dependencies": {
     "console-stamp": "0.2.9",
+    "express": "4.17.1",
     "puppeteer": "1.18.1"
   }
 }
