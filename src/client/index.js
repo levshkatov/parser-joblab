@@ -83,6 +83,9 @@ ws.onmessage = (event) => {
 
         case "auth":
             document.getElementById("antispam").src = msg.obj.path;
+            document.getElementById("inputEmail").value = "";
+            document.getElementById("inputPass").value = "";
+            document.getElementById("inputAntispam").value = "";
             document.getElementById("formAuth").style.display = "";
             break;
 
@@ -189,6 +192,8 @@ window.onload = () => {
             password: inputPass.value,
             antispam: inputAntispam.value,
         });
+
+        document.getElementById("formAuth").style.display = "none";
 
     });
 }

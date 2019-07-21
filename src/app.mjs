@@ -33,14 +33,14 @@ const log = (str, type = "INFO ", obj = null) => {
     sendWS(str, "log", obj);
 }
 
-const authorize = async () => {
+const authorize = async captchaPath => {
     sendWS("", "auth", {
-        path: "./captcha.png",
+        path: `./${captchaPath}`,
     });
 
-    authPromise = new Promise(res => authPromiseRes = res);
+    authPromise = new Promise(res => (authPromiseRes = res));
     return await authPromise;
-}
+};
 
 
 

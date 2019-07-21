@@ -112,7 +112,8 @@ export default class Browser {
         await this.joblab.goto(url);
 
         if (await this.joblab.checkPage()) {
-            await this.joblab.login(url);
+            await this.joblab.login();
+            await this.joblab.goto(url);
         }
         
         
