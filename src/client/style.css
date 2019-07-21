@@ -61,13 +61,25 @@ input, select, textarea {
     background-color: #FFF;
 }
 
-#log {
-    height:400px; 
-    width:800px;
+.log {
+    height: 400px; 
+    width: 60%;
+}
+
+#textareaLog {
+    height: 100%; 
+    width: 90%;
     padding: 10px;
-    font-family: monospace; 
-    font-size: 11pt;
-    line-height: 135%;
+    line-height: 130%;
     border: 1px solid;
-    resize: none;
+    /* resize: none; */
+    word-break: break-all;
+    overflow-y:auto;
+}
+
+#textareaLog p { 
+    display: inline;
+    font-family: monospace;
+    font-size: 10pt;
+    color: rgb(0, 0, 0);
 }

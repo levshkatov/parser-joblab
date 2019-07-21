@@ -11,10 +11,10 @@
 
 <body>
     
-    <table class="main-box" width="100%" border="0" align="center" cellpadding="0" cellspacing="0" style="min-width:300px; max-width:1200px">
+    <table class="main-box" width="100%" border="0" align="center" cellpadding="0" cellspacing="0" style="min-width:300px; max-width:1200px;">
         <tr>
             <td class="contentmain" valign="top" style="min-height:200px;">
-
+                
                 <div name="search_top" style="background:#F0F5F9; padding:10px 20px 10px 20px; margin:8px -20px 20px -20px;">
                     
                     <table width="100%" cellspacing="0" cellpadding="0" border="0">
@@ -204,19 +204,55 @@
                         <td width="10%" align="right" class="td-to-div">
                             <p><input id="inputSubmitForm" type="submit" value="Найти"
                                 style="width:100%; min-width:110px; height:41px;">
-                                </p>
-                            </td>
-                        </tr>
-                    </table>
-                    
-                </div>
+                            </p>
+                        </td>
+                    </tr>
+                </table>
                 
-            </td>
-        </tr>
-        <tr><td style="height:500px;">
-            <textarea id="log" readonly>Системные сообщения&#13;&#10;sadsad&#13;&#10;sadasd</textarea>
-        </td></tr>
-    </table>
+            </div>
+        </td>
+    </tr>
+    <tr><td></td></tr>
+    <tr>
+        <td class="contentmain" style="height:500px;">
+            <div style="float:left;" class="log">
+                    <label for="textareaLog" style="display: block;
+                    text-align: center; margin-bottom:10px">Системные сообщения</label>
+                    <div id="textareaLog" readonly></div>
+            </div>
+            
+            
+            
+            <form style="float:right; margin-right:30px; ">
+                <table cellpadding="0" cellspacing="0" border="0" class="tbl_padding table-to-div">
+                    <tbody><tr>
+                        <td width="4%"></td>
+                        <td><p><label style="margin-right:30px; font-size:19px; white-space:nowrap;"><input type="radio" name="type" value="jobseeker"> <span>Соискатель</span></label><label style="margin-right:0; font-size:19px; white-space:nowrap;"><input type="radio" name="type" value="employer" checked=""> <span>Работодатель</span></label></p></td>
+                    </tr>
+                    <tr>
+                        <td><p><b>E-mail</b></p></td>
+                        <td><p><input type="email" name="email" maxlength="60" style="width:100%; max-width:400px;" value="" required=""></p></td>
+                    </tr>
+                    <tr>
+                        <td><p><b>Пароль</b></p></td>
+                        <td><p><input type="password" name="pass" maxlength="30" style="width:100%; max-width:400px;" autocomplete="off" required=""></p></td>
+                    </tr>
+                    <tr>
+                        <td><p><b>Код</b></p></td>
+                        <td><input type="number" name="keystring" style="width:110px;" autocomplete="off" pattern="[0-9]*" inputmode="numeric" required="">
+                            <!-- <img src="/script/antispam/index.php" align="absmiddle" onclick="document.getElementById('antispam').src='/script/antispam/index.php?' + Math.random();" id="antispam" style="cursor:pointer;" title="обновить картинку" alt="обновить картинку"> -->
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><br><p><input type="submit" id="submit_auth" value="Войти" class="btn2"> <input type="hidden" name="submit" value="1"></p></td>
+                    </tr>
+                </tbody></table>
+            </form>
+        </td>
+    </tr>
+</table>
+
+
 </body>
 
 </html>

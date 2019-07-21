@@ -15,6 +15,7 @@
   "dependencies": {
     "console-stamp": "0.2.9",
     "express": "4.17.1",
+    "moment": "2.24.0",
     "puppeteer": "1.18.1"
   }
 }

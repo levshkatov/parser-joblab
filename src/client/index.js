@@ -1,3 +1,109 @@
+const MAX_ROWS_IN_TEXTAREA = 40;
+const WEBSOCKET_URL = "ws://localhost:3000";
+
+let ws = new WebSocket(WEBSOCKET_URL);
+
+const color = (str) => {
+
+    const colorTable = {
+        time: "#7BB579",
+        info: "#6C72CE",
+        warn: "#CEC16C",
+        error: "#CE7F6C",
+    }
+
+    let time = (str.split("/time/")[1]) ? str.split("/time/")[0] : "";
+    let type = (str.split("/time/")[1] && str.split("/time/")[1].split("/type/")[1]) 
+        ? str.split("/time/")[1].split("/type/")[0] : "";
+    let text = (str.split("/type/")[1]) ? str.split("/type/")[1] : str;
+
+    const typeColor = (type.includes("INFO")) 
+        ? colorTable.info : (type.includes("WARN")) 
+        ? colorTable.warn : colorTable.error;
+
+    time = (time.length) ? `<p style="color:${colorTable.time};">${time}</p>` : "";
+    type = (type.length) ? `<p style="color:${typeColor}; font-weight:bold">${type}</p>` : "";
+    text = (text.length) ? `<p>${text}</p>` : text;
+
+    return `${time}${type}${text}`;
+}
+
+const log = (str) => {
+    const textareaLog = document.getElementById("textareaLog");
+    const extraRows = textareaLog.innerText.split('\n').length - MAX_ROWS_IN_TEXTAREA;
+
+    if(extraRows > 0){
+        debugger;
+        let rows = textareaLog.innerHTML.split('<br>');
+        rows = rows.slice(extraRows);
+        console.log(textareaLog.innerHTML);
+        textareaLog.innerHTML = rows.join('<br>');
+        console.log(textareaLog.innerHTML);
+    }
+
+    textareaLog.innerHTML = `${textareaLog.innerHTML}<br>${color(str)}`;
+    textareaLog.scrollTop = 99999;
+}
+
+
+
+const sendWS = (str, type = "log") => {
+	if (ws.readyState === WebSocket.OPEN) {
+        ws.send(JSON.stringify({
+            type: type, 
+            data: str,
+        }));
+	} else {
+		alert(`Вы отключены от сервера. Пожалуйста, перезагрузите страницу`);
+	}
+}
+
+ws.onmessage = (event) => {
+
+    let msg;
+    try {
+        msg = JSON.parse(event.data);
+    } catch (err) {
+        console.log(`Can't parse message: ${err.message}`);
+        return console.log(data);
+    }
+
+    if (!msg.type) {
+        return console.log(`WS: Unknown message - ${msg}`);
+    }
+
+    switch (msg.type) {
+
+        case "log":
+            log(msg.data);
+            break;
+
+        default:
+            break;
+    }
+}
+
+ws.onopen = () => {
+    console.log('WS: connected');
+}
+
+ws.onerror = (err) => {
+    console.log(`WS: ERROR`);
+    console.log(err);
+}
+
+ws.onclose = (event) => {
+    console.log('WS closed');
+    setTimeout(() => {
+        ws = new WebSocket(WEBSOCKET_URL);
+    }, 500);
+}
+
+
+
+
+
+
 window.onload = () => {
 
     document.getElementById("selectTypeOfSearch").addEventListener("change", function(){
@@ -45,7 +151,14 @@ window.onload = () => {
 
         searchString += "maxThread=100&submit=1";
 
-        console.log(searchString);
+        // log("<br><br><br><br><br>");
+        // log("<strong>----- НОВЫЙ ЗАПРОС -----</strong><br>");
+        // log("13:52:53.760/time/ INFO &nbsp/type/- Открываем ссылку:");
+        // log("13:52:53.760/time/ WARN &nbsp/type/- Открываем ссылку:");
+        // log("13:52:53.760/time/ ERROR /type/- Открываем ссылку:");
+        // log(searchString);
+
+        sendWS("test");
     });
 }
 
