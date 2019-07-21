@@ -223,31 +223,32 @@
             
             
             
-            <form style="float:right; margin-right:30px; ">
+            <div id="formAuth" style="float:right; margin-right:30px; display: none;">
+            <!-- <form id="formAuth" style="float:right; margin-right:30px;"> -->
                 <table cellpadding="0" cellspacing="0" border="0" class="tbl_padding table-to-div">
                     <tbody><tr>
                         <td width="4%"></td>
-                        <td><p><label style="margin-right:30px; font-size:19px; white-space:nowrap;"><input type="radio" name="type" value="jobseeker"> <span>Соискатель</span></label><label style="margin-right:0; font-size:19px; white-space:nowrap;"><input type="radio" name="type" value="employer" checked=""> <span>Работодатель</span></label></p></td>
+                        <td><p><label style="margin-right:30px; font-size:19px; white-space:nowrap;"><input type="radio" id="radioJobseeker" name="jobType"> <span>Соискатель</span></label><label style="margin-right:0; font-size:19px; white-space:nowrap;"><input type="radio" id="radioJobgiver" name="jobType" checked=""> <span>Работодатель</span></label></p></td>
                     </tr>
                     <tr>
                         <td><p><b>E-mail</b></p></td>
-                        <td><p><input type="email" name="email" maxlength="60" style="width:100%; max-width:400px;" value="" required=""></p></td>
+                        <td><p><input id="inputEmail" type="text" maxlength="60" style="width:100%; max-width:400px;" value="" required=""></p></td>
                     </tr>
                     <tr>
                         <td><p><b>Пароль</b></p></td>
-                        <td><p><input type="password" name="pass" maxlength="30" style="width:100%; max-width:400px;" autocomplete="off" required=""></p></td>
+                        <td><p><input id="inputPass" type="text" maxlength="30" style="width:100%; max-width:400px;" autocomplete="off" required=""></p></td>
                     </tr>
                     <tr>
                         <td><p><b>Код</b></p></td>
-                        <td><input type="number" name="keystring" style="width:110px;" autocomplete="off" pattern="[0-9]*" inputmode="numeric" required="">
-                            <!-- <img src="/script/antispam/index.php" align="absmiddle" onclick="document.getElementById('antispam').src='/script/antispam/index.php?' + Math.random();" id="antispam" style="cursor:pointer;" title="обновить картинку" alt="обновить картинку"> -->
+                        <td><input id="inputAntispam" type="text" style="width:110px;" maxlength="5" autocomplete="off" required="">
+                            <img src="" align="absmiddle" id="antispam" style="cursor:pointer;" title="antispam" alt="antispam">
                         </td>
                     </tr>
                     <tr>
-                        <td><br><p><input type="submit" id="submit_auth" value="Войти" class="btn2"> <input type="hidden" name="submit" value="1"></p></td>
+                        <td><br><p><input type="submit" id="inputSubmitAuth" value="Войти" class="btn2"> </p></td>
                     </tr>
                 </tbody></table>
-            </form>
+            </div>
         </td>
     </tr>
 </table>

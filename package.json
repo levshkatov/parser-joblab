@@ -7,7 +7,9 @@
     "node": ">10.0.0"
   },
   "scripts": {
-    "start": "TZ=Europe/Moscow node --experimental-modules src/app.mjs"
+    "start": "TZ=Europe/Moscow node --experimental-modules src/app.mjs",
+    "window": "TZ=Europe/Moscow node --experimental-modules src/app.mjs head",
+    "debug": "TZ=Europe/Moscow node --experimental-modules src/app.mjs head debug"
   },
   "author": "levshkatov",
   "license": "proprietary",

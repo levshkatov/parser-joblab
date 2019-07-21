@@ -1,4 +1,4 @@
-const MAX_ROWS_IN_TEXTAREA = 40;
+const MAX_ROWS_IN_TEXTAREA = 500;
 const WEBSOCKET_URL = "ws://localhost:3000";
 
 let ws = new WebSocket(WEBSOCKET_URL);
@@ -32,6 +32,8 @@ const log = (str) => {
     const textareaLog = document.getElementById("textareaLog");
     const extraRows = textareaLog.innerText.split('\n').length - MAX_ROWS_IN_TEXTAREA;
 
+    console.log(str);
+
     if(extraRows > 0){
         debugger;
         let rows = textareaLog.innerHTML.split('<br>');
@@ -47,11 +49,12 @@ const log = (str) => {
 
 
 
-const sendWS = (str, type = "log") => {
+const sendWS = (str, type = "log", obj = {}) => {
 	if (ws.readyState === WebSocket.OPEN) {
         ws.send(JSON.stringify({
             type: type, 
             data: str,
+            obj: obj,
         }));
 	} else {
 		alert(`Вы отключены от сервера. Пожалуйста, перезагрузите страницу`);
@@ -76,6 +79,11 @@ ws.onmessage = (event) => {
 
         case "log":
             log(msg.data);
+            break;
+
+        case "auth":
+            document.getElementById("antispam").src = msg.obj.path;
+            document.getElementById("formAuth").style.display = "";
             break;
 
         default:
@@ -130,7 +138,7 @@ window.onload = () => {
     });
 
     document.getElementById("inputSubmitForm").addEventListener("click", function() {
-        let searchString = "https://joblab.ru/search.php?";
+        let url = "https://joblab.ru/search.php?";
 
         const params = [
             "selectTypeOfSearch", 
@@ -143,24 +151,48 @@ window.onload = () => {
         ];
 
         for(const param of params){
-            searchString += document.getElementById(param).name;
-            searchString += "=";
-            searchString += encodeWin1251(document.getElementById(param).value);
-            searchString += "&";
+            url += document.getElementById(param).name;
+            url += "=";
+            url += encodeWin1251(document.getElementById(param).value);
+            url += "&";
         }
 
-        searchString += "maxThread=100&submit=1";
+        url += "maxThread=100&submit=1";
+
+        sendWS("", "newRequest", {
+            url: url,
+        });
 
         // log("<br><br><br><br><br>");
         // log("<strong>----- НОВЫЙ ЗАПРОС -----</strong><br>");
         // log("13:52:53.760/time/ INFO &nbsp/type/- Открываем ссылку:");
         // log("13:52:53.760/time/ WARN &nbsp/type/- Открываем ссылку:");
         // log("13:52:53.760/time/ ERROR /type/- Открываем ссылку:");
-        // log(searchString);
+        // log(url);
 
-        sendWS("test");
+    });
+
+    document.getElementById("inputSubmitAuth").addEventListener("click", function() {
+        const radioJobseeker = document.getElementById("radioJobseeker");
+        const radioJobgiver = document.getElementById("radioJobgiver");
+        const inputEmail = document.getElementById("inputEmail");
+        const inputPass = document.getElementById("inputPass");
+        const inputAntispam = document.getElementById("inputAntispam");
+
+        if (!inputEmail.value.length || !inputPass.value.length || !inputAntispam.value.length) {
+            return alert("Заполните все необходимые поля");
+        }
+
+        sendWS("", "auth", {
+            radioValue: radioJobseeker.checked ? 1 : 2,
+            email: inputEmail.value,
+            password: inputPass.value,
+            antispam: inputAntispam.value,
+        });
+
     });
 }
+
 
 
 
