@@ -152,17 +152,17 @@ export default class Joblab {
         });
 
         const authResult = await this.page.waitForFunction(() => {
-            const els = document.querySelectorAll("ul.menu li");
-            if (!Array.from(els).find(el => el.textContent === "Войти")) {
-                return {
-                    type: "success",
-                };
-            }
-
             if (document.querySelector(".error")) {
                 return {
                     type: "error",
                     msg: document.querySelector(".error").textContent,
+                };
+            }
+
+            const els = document.querySelectorAll("ul.menu li");
+            if (!Array.from(els).find(el => el.textContent === "Войти")) {
+                return {
+                    type: "success",
                 };
             }
         });
