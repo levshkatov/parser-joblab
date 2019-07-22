@@ -1,12 +1,5 @@
 import puppeteer from "puppeteer";
 import Joblab from "./Joblab";
-import csvConverter from "json-2-csv";
-import { promisify } from "util";
-import fs from "fs";
-
-// const stringify = promisify(csvStringify);
-const json2csv = promisify(csvConverter.json2csv);
-const writeFile = promisify(fs.writeFile);
 
 export default class Browser {
     
@@ -157,16 +150,6 @@ export default class Browser {
         this.log(`<strong>Всего анкет: ${this.joblab.parsedItems.length}</strong>`);
 
         this.joblab.workers.forEach(async worker => await worker.close());
-
-        const output = (await json2csv(this.joblab.parsedItems)).replace(/undefined/g, '');
-        await writeFile("./output/output.csv", output, "utf8");
-        await writeFile("./src/client/output.csv", output, "utf8");
-
-        this.log(`Файл записан: ./output/output.csv`);
-
-        this.sendWS("", "output", {
-            path: `./output.csv`,
-        });
     }
     
 }

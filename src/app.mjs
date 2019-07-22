@@ -3,6 +3,10 @@ import moment from "moment";
 import { startServer, wss } from "./core/connections";
 import { Constants } from "./core/Constants";
 import Browser from "./core/Browser";
+import csvConverter from "json-2-csv";
+import { promisify } from "util";
+import fs from "fs";
+import * as path from "path";
 
 startServer();
 
@@ -14,6 +18,11 @@ let authPromiseRes = null;
 let anticaptchaPromise = null;
 let anticaptchaPromiseRes = null;
 let anticaptchaIsBusy = false;
+
+const json2csv = promisify(csvConverter.json2csv);
+const writeFile = promisify(fs.writeFile);
+const readdir = promisify(fs.readdir);
+const unlink = promisify(fs.unlink);
 
 const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
 
@@ -98,6 +107,26 @@ const handleNewRequest = async (msg) => {
         await browser.page.close();
         log("Вкладка закрыта");
     }
+
+    if(browser.joblab && browser.joblab.parsedItems) {
+        const output = (await json2csv(browser.joblab.parsedItems)).replace(/undefined/g, "");
+        await writeFile("./output/output.csv", output, "utf8");
+        await writeFile("./src/client/output.csv", output, "utf8");
+
+        log(`Файл записан: ./output/output.csv`);
+
+        sendWS("", "output", {
+            path: `./output.csv`,
+        });
+    }
+
+    const images = await readdir("./src/client/captcha/");
+
+    for (const image of images) {
+        await unlink(path.join("./src/client/captcha/", image));
+    }
+
+    log("Папка ./src/client/captcha/ очищена");
 
     log("Запрос обработан. Ожидание дальнейших действий...");
 }
