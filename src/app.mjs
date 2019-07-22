@@ -13,6 +13,7 @@ let authPromise = null;
 let authPromiseRes = null;
 let anticaptchaPromise = null;
 let anticaptchaPromiseRes = null;
+let anticaptchaIsBusy = false;
 
 const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
 
@@ -45,9 +46,11 @@ const authorize = async captchaPath => {
 };
 
 const anticaptcha = async (captchaPath, workerId) => {
-    if (anticaptchaPromise && !anticaptchaPromise.anticaptcha) {
+    if (anticaptchaIsBusy) {
         return await anticaptchaPromise;
     }
+
+    anticaptchaIsBusy = true;
 
     sendWS("", "anticaptcha", {
         path: `./${captchaPath}`,
@@ -55,6 +58,7 @@ const anticaptcha = async (captchaPath, workerId) => {
     });
 
     anticaptchaPromise = new Promise(res => (anticaptchaPromiseRes = res));
+    anticaptchaPromise.then(() => anticaptchaIsBusy = false);
     return await anticaptchaPromise;
 };
 
