@@ -144,7 +144,8 @@ export default class Browser {
         this.log(`Собираем ссылки на анкеты`);
         await this.joblab.parsePages();
 
-        const totalWorkers = (process.argv.includes("head")) ? 1 : 5;
+        // const totalWorkers = (process.argv.includes("head")) ? 1 : 5;
+        const totalWorkers = 1;
         this.joblab.workers = [];
         this.joblab.parsedItems = [];
         this.log(`Начинаем парсить анкеты в ${totalWorkers} поток${totalWorkers===1 ? "" : "ов"}`);
