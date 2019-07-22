@@ -160,7 +160,7 @@ export default class Joblab {
             }
 
             const els = document.querySelectorAll("ul.menu li");
-            if (!Array.from(els).find(el => el.textContent === "Войти")) {
+            if (Array.from(els).find(el => el.textContent === "Выход")) {
                 return {
                     type: "success",
                 };
