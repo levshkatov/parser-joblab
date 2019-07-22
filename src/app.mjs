@@ -11,6 +11,8 @@ moment.locale('ru');
 let browser = null;
 let authPromise = null;
 let authPromiseRes = null;
+let anticaptchaPromise = null;
+let anticaptchaPromiseRes = null;
 
 const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
 
@@ -38,8 +40,22 @@ const authorize = async captchaPath => {
         path: `./${captchaPath}`,
     });
 
-    authPromise = new Promise(res => (authPromiseRes = res));
+    authPromise = new Promise(res => authPromiseRes = res);
     return await authPromise;
+};
+
+const anticaptcha = async (captchaPath, workerId) => {
+    if (anticaptchaPromise && !anticaptchaPromise.anticaptcha) {
+        return await anticaptchaPromise;
+    }
+
+    sendWS("", "anticaptcha", {
+        path: `./${captchaPath}`,
+        workerId: workerId,
+    });
+
+    anticaptchaPromise = new Promise(res => (anticaptchaPromiseRes = res));
+    return await anticaptchaPromise;
 };
 
 
@@ -53,9 +69,10 @@ const handleNewRequest = async (msg) => {
         browserSettings.headless = process.argv.includes("head") ? false : true;
         browserSettings.debug = process.argv.includes("debug");
 
-        browser = new Browser(browserSettings, log);
+        browser = new Browser(browserSettings, log, sendWS);
         await browser.createBrowser();
         browser.authorize = authorize;
+        browser.anticaptcha = anticaptcha;
     }
 
     try {
@@ -68,6 +85,7 @@ const handleNewRequest = async (msg) => {
         const url = msg.obj.url;
 
         await browser.handleRequest(url);
+        await sleep(500);
     } catch (err) {
         log(err.message, "ERROR", err);
     }
@@ -112,6 +130,10 @@ wss.on("connection", ws => {
 
             case "auth":
             authPromiseRes(msg.obj);
+            break;
+
+            case "anticaptcha":
+            anticaptchaPromiseRes(msg.obj);
             break;
             
             default:

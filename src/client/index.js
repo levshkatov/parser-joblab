@@ -3,6 +3,8 @@ const WEBSOCKET_URL = "ws://localhost:3000";
 
 let ws = new WebSocket(WEBSOCKET_URL);
 
+let anticaptchaWorkerId = null;
+
 const color = (str) => {
 
     const colorTable = {
@@ -76,17 +78,43 @@ ws.onmessage = (event) => {
     }
 
     switch (msg.type) {
-
         case "log":
             log(msg.data);
             break;
 
         case "auth":
+            if (document.getElementById("outputLink")) {
+                document
+                    .getElementById("contentmain")
+                    .removeChild(document.getElementById("outputLink"));
+            }
             document.getElementById("antispam").src = msg.obj.path;
-            document.getElementById("inputEmail").value = "";
-            document.getElementById("inputPass").value = "";
+            document.getElementById("inputEmail").value = "malak.part@yandex.ru";
+            document.getElementById("inputPass").value = "6584045666";
             document.getElementById("inputAntispam").value = "";
             document.getElementById("formAuth").style.display = "";
+            break;
+
+        case "output":
+            const outputLink = document.createElement("a");
+            outputLink.href = msg.obj.path;
+            outputLink.textContent = "Скачать";
+            outputLink.id = "outputLink";
+            document
+                .getElementById("contentmain")
+                .insertBefore(outputLink, document.getElementById("formAuth"));
+            break;
+
+        case "anticaptcha":
+            if (document.getElementById("outputLink")) {
+                document
+                    .getElementById("contentmain")
+                    .removeChild(document.getElementById("outputLink"));
+            }
+            document.getElementById("anticaptchaImg").src = msg.obj.path;
+            document.getElementById("inputAnticaptcha").value = "";
+            document.getElementById("anticaptcha").style.display = "";
+            anticaptchaWorkerId = msg.obj.workerId;
             break;
 
         default:
@@ -166,13 +194,11 @@ window.onload = () => {
             url: url,
         });
 
-        // log("<br><br><br><br><br>");
-        // log("<strong>----- НОВЫЙ ЗАПРОС -----</strong><br>");
-        // log("13:52:53.760/time/ INFO &nbsp/type/- Открываем ссылку:");
-        // log("13:52:53.760/time/ WARN &nbsp/type/- Открываем ссылку:");
-        // log("13:52:53.760/time/ ERROR /type/- Открываем ссылку:");
-        // log(url);
-
+        if (document.getElementById("outputLink")) {
+            document
+                .getElementById("contentmain")
+                .removeChild(document.getElementById("outputLink"));
+        }
     });
 
     document.getElementById("inputSubmitAuth").addEventListener("click", function() {
@@ -195,6 +221,21 @@ window.onload = () => {
 
         document.getElementById("formAuth").style.display = "none";
 
+    });
+
+    document.getElementById("inputSubmitCaptcha").addEventListener("click", function() {
+        const inputAnticaptcha = document.getElementById("inputAnticaptcha");
+
+        if (!inputAntispam.value.length) {
+            return alert("Заполните все необходимые поля");
+        }
+
+        sendWS("", "anticaptcha", {
+            anticaptcha: inputAnticaptcha.value,
+            workerId: anticaptchaWorkerId,
+        });
+
+        document.getElementById("anticaptcha").style.display = "none";
     });
 }
 

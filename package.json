@@ -16,7 +16,9 @@
   "private": true,
   "dependencies": {
     "console-stamp": "0.2.9",
+    "csv-stringify": "5.3.0",
     "express": "4.17.1",
+    "json-2-csv": "3.5.5",
     "moment": "2.24.0",
     "puppeteer": "1.18.1"
   }

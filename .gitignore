@@ -1,4 +1,5 @@
 node_modules/
 src/client/captcha/
+output/
 logs
 *.log

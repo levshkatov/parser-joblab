@@ -1,11 +1,19 @@
 import puppeteer from "puppeteer";
 import Joblab from "./Joblab";
+import csvConverter from "json-2-csv";
+import { promisify } from "util";
+import fs from "fs";
+
+// const stringify = promisify(csvStringify);
+const json2csv = promisify(csvConverter.json2csv);
+const writeFile = promisify(fs.writeFile);
 
 export default class Browser {
     
-    constructor(browserSettings, log) {
+    constructor(browserSettings, log, sendWS) {
         this.browserSettings = browserSettings;
         this.log = log;
+        this.sendWS = sendWS;
     }
     
     async createBrowser() {
@@ -116,8 +124,48 @@ export default class Browser {
             await this.joblab.goto(url);
         }
         
-        
-        
+        const totalItems = await this.page.$eval("td.td-to-div h1", el => parseInt(el.textContent.split("(")[1]));
+        const typeOfItems = await this.page.$eval("td.td-to-div h1", el => (el.textContent.includes("резюме")) ? "Количество резюме:" : "Количество вакансий:");
+
+        this.log(`${typeOfItems} ${totalItems}`);
+
+        const totalPages = (await this.page.$(".pager")) 
+            ? await this.page.evaluate(() => parseInt(document.querySelectorAll(".pager")[document.querySelectorAll(".pager").length-1].textContent)) 
+            : 1;
+
+        this.log(`Количество страниц: ${totalPages}`);
+
+        this.joblab.pages = [];
+
+        for (let i = 1; i <= totalPages; i++) {
+            this.joblab.pages.push(`${url}&page=${i}`);
+        }
+
+        this.log(`Собираем ссылки на анкеты`);
+        await this.joblab.parsePages();
+
+        const totalWorkers = (process.argv.includes("head")) ? 1 : 5;
+        this.joblab.workers = [];
+        this.joblab.parsedItems = [];
+        this.log(`Начинаем парсить анкеты в ${totalWorkers} поток${totalWorkers===1 ? "" : "ов"}`);
+        await this.joblab.setWorkers(totalWorkers);
+
+        await this.joblab.parsingPromise;
+
+        this.log(`Парсинг завершен`, "WARN ");
+        this.log(`<strong>Всего анкет: ${this.joblab.parsedItems.length}</strong>`);
+
+        this.joblab.workers.forEach(async worker => await worker.close());
+
+        const output = (await json2csv(this.joblab.parsedItems)).replace(/undefined/g, '');
+        await writeFile("./output/output.csv", output, "utf8");
+        await writeFile("./src/client/output.csv", output, "utf8");
+
+        this.log(`Файл записан: ./output/output.csv`);
+
+        this.sendWS("", "output", {
+            path: `./output.csv`,
+        });
     }
     
 }
