@@ -123,6 +123,9 @@ const handleNewRequest = async (msg) => {
     const images = await readdir("./src/client/captcha/");
 
     for (const image of images) {
+        if (image.includes("gitignore")) {
+            continue;
+        }
         await unlink(path.join("./src/client/captcha/", image));
     }
 
