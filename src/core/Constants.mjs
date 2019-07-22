@@ -1,5 +1,7 @@
 export const Constants = {
     
+    URL: `localhost`,
+    // URL: `52.47.115.103`,
     WEBSOCKET_PORT: 3000,
     EXPRESS_PORT: 8444,
     

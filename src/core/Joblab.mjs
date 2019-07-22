@@ -194,7 +194,7 @@ export default class Joblab {
                 return items;
             });
 
-        if (this.items < 200) {
+        if (this.items.length < 200) {
             this.items = this.items.concat(items);
         }
 
