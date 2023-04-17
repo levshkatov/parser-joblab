@@ -12,7 +12,7 @@
     "debug": "TZ=Europe/Moscow node --experimental-modules src/app.mjs head debug"
   },
   "author": "levshkatov",
-  "license": "proprietary",
+  "license": "UNLICENSED",
   "private": true,
   "dependencies": {
     "console-stamp": "0.2.9",
