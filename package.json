@@ -1,5 +1,5 @@
 {
-  "name": "joblab-parser",
+  "name": "parser-joblab",
   "version": "1.0.0",
   "description": "parsing script for joblab.ru",
   "main": "index.js",

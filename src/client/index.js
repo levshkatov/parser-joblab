@@ -1,6 +1,6 @@
 const MAX_ROWS_IN_TEXTAREA = 500;
-// const WEBSOCKET_URL = "ws://localhost:3000";
-const WEBSOCKET_URL = "ws://52.47.115.103:3000";
+const WEBSOCKET_URL = "ws://localhost:3000";
+// const WEBSOCKET_URL = "ws://52.47.115.103:3000";
 
 let ws = new WebSocket(WEBSOCKET_URL);
 

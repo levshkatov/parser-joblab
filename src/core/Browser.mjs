@@ -1,5 +1,5 @@
 import puppeteer from "puppeteer";
-import Joblab from "./Joblab";
+import Joblab from "./Joblab.mjs";
 
 export default class Browser {
     
